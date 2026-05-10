@@ -177,7 +177,23 @@ internal struct Vigil: ParsableCommand {
   public static var configuration: CommandConfiguration {
     CommandConfiguration(abstract: "Prevent the machine from sleeping.",
                          version: PackageVersion,
-                         subcommands: [Start.self, End.self, Stand.self, Daemon.self],
+                         subcommands: [Start.self, End.self, Stand.self, Daemon.self, Probe.self],
                          defaultSubcommand: Stand.self)
+  }
+
+  public struct Probe: ParsableCommand {
+    public static var configuration: CommandConfiguration {
+      CommandConfiguration(abstract: "Experiment: exercise Foundation + concurrency.",
+                           shouldDisplay: false)
+    }
+
+    public func run() throws {
+      // Reference the async/Foundation symbols so they're linked into the
+      // final executable. We don't actually drive the async code from sync
+      // here; the goal is purely to exercise the static linker.
+      print(FoundationConcurrencyProbe.touchFoundation())
+      _ = FoundationConcurrencyProbe.touchConcurrency
+      _ = FoundationConcurrencyProbe.run
+    }
   }
 }
