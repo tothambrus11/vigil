@@ -3,9 +3,8 @@
 // uses these features. Not actually wired into the CLI; merely referenced
 // from a public symbol so the linker doesn't dead-strip it.
 
-import Foundation
+internal import Foundation
 
-@MainActor
 internal enum FoundationConcurrencyProbe {
   static func touchFoundation() -> String {
     let now = Date()
