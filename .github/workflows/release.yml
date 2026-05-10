@@ -7,6 +7,8 @@ on:
   push:
     tags:
       - 'v*.*.*'
+    branches:
+      - 'experiment/**'
   workflow_dispatch:
 
 permissions:
